@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="core/main.css">
+    <script type="text/javascript" src="core/helpers.js"></script>
+    <script type="text/javascript" src="core/panel.js"></script>
+    <script type="text/javascript" src="core/boundaries.js"></script>
+    <script type="text/javascript" src="core/event.js"></script>
+    <script type="text/javascript" src="core/events_dispatcher.js"></script>
+    <script type="text/javascript" src="core/osc_sender.js"></script>
+    <script type="text/javascript" src="core/color.js"></script>
+    <script type="text/javascript" src="core/group.js"></script>
+    <script type="text/javascript" src="core/switch.js"></script>
+    <script type="text/javascript" src="core/pad.js"></script>
+    <script type="text/javascript" src="core/knob.js"></script>
+    <script type="text/javascript" src="core/selector.js"></script>
+    <script type="text/javascript" src="core/xy_track.js"></script>
+    <script type="text/javascript" src="core/v_slider.js"></script>
+    <script type="text/javascript" src="core/light.js"></script>
+  </head>
+  <body>
+    <script>
+      myPanel = new Panel();
+      ed_1 = new EventsDispatcher(myPanel);
+      osc_1 = new OscSender({baseUrl:"192.168.1.7", route:"/control"});
+
+      // Definition of colors
+      c_on_1 = new Color(255,215,0);
+
+      // Definition of groups
+      g_1 = new Group({panel:myPanel, x:20, y:230, width:290, height:245, caption:"MIXER"});
+      g_2 = new Group({panel:myPanel, x:20, y:30, width:70, height:165, caption:"SUB OSC"});
+
+      // MIXER GROUP
+      vs_1_1 = new Vslider({panel:myPanel, group:g_1, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"mg_sl_sub", x:20, y:15, min:0, max:1, val:0, decimal:true, onColor:c_on_1, caption:"SUB"});
+      vs_1_2 = new Vslider({panel:myPanel, group:g_1, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"mg_sl_saw", x:75, y:15, min:0, max:1, val:0, decimal:true, onColor:c_on_1, caption:"SAW"});
+      vs_1_3 = new Vslider({panel:myPanel, group:g_1, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"mg_sl_sqr", x:130, y:15, min:0, max:1, val:0, decimal:true, onColor:c_on_1, caption:"SQR"});
+      vs_1_4 = new Vslider({panel:myPanel, group:g_1, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"mg_sl_tri", x:185, y:15, min:0, max:1, val:0, decimal:true, onColor:c_on_1, caption:"TRI"});
+      vs_1_5 = new Vslider({panel:myPanel, group:g_1, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"mg_sl_noi", x:240, y:15, min:0, max:1, val:0, decimal:true, onColor:c_on_1, caption:"NOISE"});
+
+      // SUB OSC GROUP
+      sel_2_1 = new Selector({panel:myPanel, group:g_2, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"so_sel_wave", x:10, y:10, size:50, array:["sin", "sqr"], index:0, onColor:c_on_1, caption:"WAVE"});
+      sel_2_2 = new Selector({panel:myPanel, group:g_2, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"so_sel_oct", x:10, y:90, size:50, array:["-1", "-2"], index:0, onColor:c_on_1, caption:"OCTAVE"});
+    </script>
+  </body>
+</html>
