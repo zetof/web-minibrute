@@ -17,10 +17,8 @@ OSCdef.new(\control, {
 	if(msg[1] == 'mg_sl_sqr', { ~square.set(\lvl, msg[2]); });
 	if(msg[1] == 'mg_sl_tri', { ~triangle.set(\lvl, msg[2]); });
 	if(msg[1] == 'mg_sl_noi', { ~noise.set(\lvl, msg[2]); });
-	if(msg[1] == 'so_sel_wave' && msg[2] == 'sin', { ~subOsc.set(\type, 0); });
-	if(msg[1] == 'so_sel_wave' && msg[2] == 'sqr', { ~subOsc.set(\type, 1); });
-	if(msg[1] == 'so_sel_oct' && msg[2] == '-1', { ~subOsc.set(\div, 1); });
-	if(msg[1] == 'so_sel_oct' && msg[2] == '-2', { ~subOsc.set(\div, 2); });
+	if(msg[1] == 'so_switch_wave', { ~subOsc.set(\type, msg[2]); });
+	if(msg[1] == 'so_switch_oct', { ~subOsc.set(\div, 1 + msg[2]); });
 }, "/control");
 
 // Set MIDI controls for a monophonic synth
@@ -107,7 +105,6 @@ SynthDef(\mixer, {
 
 // Instantiate synths
 ~note = Synth.new(\note, [\outBus, ~synthsBus], ~noteGroup);
-~sinus = Synth.new(\sinus, [\inBus, ~synthsBus, \outBus, ~mixerBus], ~synthsGroup);
 ~saw = Synth.new(\saw, [\inBus, ~synthsBus, \outBus, ~mixerBus], ~synthsGroup);
 ~triangle = Synth.new(\triangle, [\inBus, ~synthsBus, \outBus, ~mixerBus], ~synthsGroup);
 ~square = Synth.new(\square, [\inBus, ~synthsBus, \outBus, ~mixerBus], ~synthsGroup);
