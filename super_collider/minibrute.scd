@@ -19,6 +19,10 @@ OSCdef.new(\control, {
 	if(msg[1] == 'mg_sl_noi', { ~noise.set(\lvl, msg[2]); });
 	if(msg[1] == 'so_switch_wave', { ~subOsc.set(\type, msg[2]); });
 	if(msg[1] == 'so_switch_oct', { ~subOsc.set(\div, 1 + msg[2]); });
+	if(msg[1] == 'usg_knob_amt', { ~saw.set(\amt, msg[2]); });
+	if(msg[1] == 'usg_knob_rate', { ~saw.set(\rate, msg[2]); });
+	if(msg[1] == 'sg_knob_width', { ~square.set(\width, msg[2]); });
+	//if(msg[1] == 'sg_knob_env', { ~square.set(\env, msg[2]); });
 }, "/control");
 
 // Set MIDI controls for a monophonic synth
@@ -64,10 +68,14 @@ SynthDef(\note, {
 }).add;
 
 SynthDef(\saw, {
-	arg inBus, outBus, lvl=0;
-	var freq;
+	arg inBus, outBus, amt=0, rate=1, lvl=0;
+	var freq, saw_1, saw_2, saw_3, sig;
 	freq = In.ar(inBus, 1);
-	Out.ar(outBus, lvl * LFSaw.ar(freq));
+	saw_1 = 0.5 * LFSaw.ar(freq);
+	saw_2 = (amt / 4) * DelayN.ar(saw_1, delaytime:LFSaw.ar(0.5, mul:1/freq, add:1/freq));
+	saw_3 = (amt / 4) * DelayN.ar(saw_1, delaytime:LFSaw.ar(0.5 * rate, mul:1/freq, add:1/freq));
+	sig = saw_1 + saw_2 + saw_3;
+	Out.ar(outBus, lvl * sig);
 }).add;
 
 SynthDef(\triangle, {
@@ -78,10 +86,11 @@ SynthDef(\triangle, {
 }).add;
 
 SynthDef(\square, {
-	arg inBus, outBus, lvl=0;
-	var freq;
+	arg inBus, outBus, width=0.5, lvl=0;
+	var freq, sig;
 	freq = In.ar(inBus, 1);
-	Out.ar(outBus, lvl * LFPulse.ar(freq));
+	sig = LFPulse.ar(freq, width:width);
+	Out.ar(outBus, lvl * sig);
 }).add;
 
 SynthDef(\noise, {

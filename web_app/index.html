@@ -29,19 +29,35 @@
       c_on_1 = new Color(255,215,0);
 
       // Definition of groups
-      g_1 = new Group({panel:myPanel, x:20, y:195, width:290, height:245, caption:"MIXER"});
-      g_2 = new Group({panel:myPanel, x:20, y:30, width:120, height:120, caption:"SUB OSC"});
+      g_1 = new Group({panel:myPanel, x:20, y:215, width:330, height:245, caption:"MIXER"});
+      g_2 = new Group({panel:myPanel, x:20, y:30, width:120, height:150, caption:"SUB OSC"});
+      g_3 = new Group({panel:myPanel, x:150, y:30, width:60, height:150, caption:"SAW"});
+      g_4 = new Group({panel:myPanel, x:220, y:30, width:60, height:150, caption:"SQUARE"});
+      g_5 = new Group({panel:myPanel, x:290, y:30, width:60, height:150, caption:"TRI"});
 
       // MIXER GROUP
       vs_1_1 = new Vslider({panel:myPanel, group:g_1, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"mg_sl_sub", x:20, y:15, min:0, max:1, val:0, decimal:true, onColor:c_on_1, caption:"SUB"});
-      vs_1_2 = new Vslider({panel:myPanel, group:g_1, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"mg_sl_saw", x:75, y:15, min:0, max:1, val:0, decimal:true, onColor:c_on_1, caption:"SAW"});
-      vs_1_3 = new Vslider({panel:myPanel, group:g_1, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"mg_sl_sqr", x:130, y:15, min:0, max:1, val:0, decimal:true, onColor:c_on_1, caption:"SQR"});
-      vs_1_4 = new Vslider({panel:myPanel, group:g_1, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"mg_sl_tri", x:185, y:15, min:0, max:1, val:0, decimal:true, onColor:c_on_1, caption:"TRI"});
-      vs_1_5 = new Vslider({panel:myPanel, group:g_1, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"mg_sl_noi", x:240, y:15, min:0, max:1, val:0, decimal:true, onColor:c_on_1, caption:"NOISE"});
+      vs_1_2 = new Vslider({panel:myPanel, group:g_1, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"mg_sl_saw", x:85, y:15, min:0, max:1, val:0, decimal:true, onColor:c_on_1, caption:"SAW"});
+      vs_1_3 = new Vslider({panel:myPanel, group:g_1, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"mg_sl_sqr", x:150, y:15, min:0, max:1, val:0, decimal:true, onColor:c_on_1, caption:"SQR"});
+      vs_1_4 = new Vslider({panel:myPanel, group:g_1, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"mg_sl_tri", x:215, y:15, min:0, max:1, val:0, decimal:true, onColor:c_on_1, caption:"TRI"});
+      vs_1_5 = new Vslider({panel:myPanel, group:g_1, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"mg_sl_noi", x:280, y:15, min:0, max:1, val:0, decimal:true, onColor:c_on_1, caption:"NOISE"});
 
       // SUB OSC GROUP
-      s_2_1 = new Switch({panel:myPanel, group:g_2, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"so_switch_wave", x:40, y:15, width:40, height:20, onColor:c_on_1, caption:"WAVE", labels:["sin", "sqr"], val:0});
-      s_2_2 = new Switch({panel:myPanel, group:g_2, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"so_switch_oct", x:40, y:70, width:40, height:20, onColor:c_on_1, caption:"OCTAVE", labels:["-1", "-2"], val:0});
+      s_2_1 = new Switch({panel:myPanel, group:g_2, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"so_switch_wave", x:40, y:30, width:40, height:20, onColor:c_on_1, caption:"WAVE", labels:["sin", "sqr"], val:0});
+      s_2_2 = new Switch({panel:myPanel, group:g_2, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"so_switch_oct", x:40, y:90, width:40, height:20, onColor:c_on_1, caption:"OCTAVE", labels:["-1", "-2"], val:0});
+
+      //ULTRA SAW GROUP
+      k_3_1 = new Knob({panel:myPanel, group:g_3, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"usg_knob_amt", x:10, y:15, size:40, min:0, max:1, val:0, decimal:true, onColor:c_on_1, caption:"AMT"});
+      k_3_2 = new Knob({panel:myPanel, group:g_3, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"usg_knob_rate", x:10, y:80, size:40, min:0.1, max:10, val:0.1, decimal:true, onColor:c_on_1, caption:"RATE"});
+
+      //SQUARE GROUP
+      k_4_1 = new Knob({panel:myPanel, group:g_4, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"sg_knob_width", x:10, y:15, size:40, min:0.5, max:0.9, val:0.5, decimal:true, onColor:c_on_1, caption:"WIDTH"});
+      k_4_2 = new Knob({panel:myPanel, group:g_4, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"sg_knob_env", x:10, y:80, size:40, min:-10, max:10, val:0.1, onColor:c_on_1, caption:"ENV"});
+
+      //TRIANGLE GROUP
+      k_5_1 = new Knob({panel:myPanel, group:g_5, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"sg_knob_width", x:10, y:15, size:40, min:0.5, max:0.9, val:0.5, decimal:true, onColor:c_on_1, caption:"METAL"});
+      k_5_2 = new Knob({panel:myPanel, group:g_5, eventsDispatcher:ed_1, oscSender:osc_1, oscLabel:"sg_knob_env", x:10, y:80, size:40, min:-10, max:10, val:0.1, onColor:c_on_1, caption:"ENV"});
+
     </script>
   </body>
 </html>
