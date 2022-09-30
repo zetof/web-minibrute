@@ -80,13 +80,14 @@ SynthDef(\saw, {
 
 SynthDef(\triangle, {
 	arg inBus, outBus, lvl=0;
-	var freq;
+	var freq, sig;
 	freq = In.ar(inBus, 1);
-	Out.ar(outBus, lvl * LFTri.ar(freq));
+	sig = Fold.ar(LFTri.ar(freq), -0.5, 0.5);
+	Out.ar(outBus, lvl * sig);
 }).add;
 
 SynthDef(\square, {
-	arg inBus, outBus, width=0.5, lvl=0;
+	arg inBus, outBus, width=0.5, low=0, high=1, lvl=0;
 	var freq, sig;
 	freq = In.ar(inBus, 1);
 	sig = LFPulse.ar(freq, width:width);
@@ -111,7 +112,8 @@ SynthDef(\mixer, {
 	env = EnvGen.ar(Env.adsr(atkTime, dcyTime, susLvl, rlsTime, peakLvl), gate, doneAction:2);
 	Out.ar(outBus, lvl * env * In.ar(inBus, 1)!2);
 }).add;
-
+)
+(
 // Instantiate synths
 ~note = Synth.new(\note, [\outBus, ~synthsBus], ~noteGroup);
 ~saw = Synth.new(\saw, [\inBus, ~synthsBus, \outBus, ~mixerBus], ~synthsGroup);
